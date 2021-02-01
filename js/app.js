@@ -32,5 +32,51 @@ const tasks = [
 ];
 
 (function (arrOfTasks) {
+        const objOfTasks = arrOfTasks.reduce((acc, task) => {
+            acc[task._id] = task;
+            return acc;
+        },{});
+        const listContainer = document.querySelector('.tasks-list-section .list-group');
+
+        renderAllTasks(arrOfTasks);
+
+        function renderAllTasks(taskList){
+                if (!taskList){
+                    console.error('Добавьте список задач!');
+                    return;
+                }
+                const fragment = document.createDocumentFragment();
+                Object.values(taskList).forEach( task => {
+                    const li = listItemTemplate(task);
+                    fragment.appendChild(li);
+                });
+                listContainer.appendChild(fragment);
+
+        }
+
+        function listItemTemplate({_id, title, body}){
+            const li = document.createElement('li');
+            li.classList.add('list-group-item', 'd-flex', 'align-items-center', 'flex-wrap', 'mt-2');
+
+            const span = document.createElement('span');
+            span.style.fontWeight = 'bold';
+            span.textContent = title;
+
+            const btnDelete = document.createElement('button');
+            btnDelete.classList.add('btn', 'btn-danger', 'ml-auto', 'delete-btn');
+            btnDelete.textContent = 'Delete'
+
+            const p = document.createElement('p');
+            p.classList.add('mt-2', 'w-100');
+            p.textContent = body;
+
+            li.appendChild(span);
+            li.appendChild(btnDelete);
+            li.appendChild(p);
+
+            return li;
+        }
+
+
 
 })(tasks);
