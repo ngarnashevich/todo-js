@@ -32,6 +32,5 @@ const tasks = [
 ];
 
 (function (arrOfTasks) {
-    console.log(arrOfTasks);
 
 })(tasks);
